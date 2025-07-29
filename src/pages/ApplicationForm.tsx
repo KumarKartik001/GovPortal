@@ -1,10 +1,41 @@
 import React, { useState } from 'react';
-import { Upload, Check, AlertCircle, User, Mail, Phone, MapPin, GraduationCap, Briefcase } from 'lucide-react';
+import { Upload, Check, AlertCircle, User, MapPin, GraduationCap, Briefcase } from 'lucide-react';
+
+// Types for form data and errors
+interface FormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  dateOfBirth: string;
+  gender: string;
+  category: string;
+  address: string;
+  city: string;
+  state: string;
+  pincode: string;
+  highestQualification: string;
+  university: string;
+  graduationYear: string;
+  percentage: string;
+  experience: string;
+  currentPosition: string;
+  currentCompany: string;
+  skills: string;
+  position: string;
+  department: string;
+  preferredLocation: string;
+  resume: File | null;
+  photo: File | null;
+  achievements: string;
+  references: string;
+}
+
+type FormErrors = Partial<Record<keyof FormData, string>>;
 
 const ApplicationForm = () => {
-  const [currentStep, setCurrentStep] = useState(1);
-  const [formData, setFormData] = useState({
-    // Personal Information
+  const [currentStep, setCurrentStep] = useState<number>(1);
+  const [formData, setFormData] = useState<FormData>({
     firstName: '',
     lastName: '',
     email: '',
@@ -12,40 +43,27 @@ const ApplicationForm = () => {
     dateOfBirth: '',
     gender: '',
     category: '',
-    
-    // Address Information
     address: '',
     city: '',
     state: '',
     pincode: '',
-    
-    // Educational Information
     highestQualification: '',
     university: '',
     graduationYear: '',
     percentage: '',
-    
-    // Professional Information
     experience: '',
     currentPosition: '',
     currentCompany: '',
     skills: '',
-    
-    // Position Applied
     position: '',
     department: '',
     preferredLocation: '',
-    
-    // Documents
     resume: null,
     photo: null,
-    
-    // Additional Information
     achievements: '',
     references: ''
   });
-
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<FormErrors>({});
 
   const steps = [
     { number: 1, title: 'Personal Info', icon: User },
@@ -81,7 +99,7 @@ const ApplicationForm = () => {
     "Uttar Pradesh", "West Bengal", "Madhya Pradesh", "Haryana"
   ];
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -89,17 +107,16 @@ const ApplicationForm = () => {
     }));
   };
 
-  const handleFileUpload = (e, fieldName) => {
-    const file = e.target.files[0];
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>, fieldName: keyof Pick<FormData, 'resume' | 'photo'>) => {
+    const file = e.target.files && e.target.files[0] ? e.target.files[0] : null;
     setFormData(prev => ({
       ...prev,
       [fieldName]: file
     }));
   };
 
-  const validateStep = (step) => {
-    const newErrors = {};
-    
+  const validateStep = (step: number) => {
+    const newErrors: FormErrors = {};
     switch (step) {
       case 1:
         if (!formData.firstName) newErrors.firstName = 'First name is required';
@@ -129,7 +146,6 @@ const ApplicationForm = () => {
         if (!formData.photo) newErrors.photo = 'Photo is required';
         break;
     }
-    
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -166,7 +182,7 @@ const ApplicationForm = () => {
                 />
                 {errors.firstName && <p className="text-red-500 text-sm mt-1">{errors.firstName}</p>}
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Last Name *</label>
                 <input
@@ -178,7 +194,7 @@ const ApplicationForm = () => {
                 />
                 {errors.lastName && <p className="text-red-500 text-sm mt-1">{errors.lastName}</p>}
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Email *</label>
                 <input
@@ -190,7 +206,7 @@ const ApplicationForm = () => {
                 />
                 {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number *</label>
                 <input
@@ -202,7 +218,7 @@ const ApplicationForm = () => {
                 />
                 {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Date of Birth *</label>
                 <input
@@ -214,7 +230,7 @@ const ApplicationForm = () => {
                 />
                 {errors.dateOfBirth && <p className="text-red-500 text-sm mt-1">{errors.dateOfBirth}</p>}
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Gender</label>
                 <select
@@ -229,7 +245,7 @@ const ApplicationForm = () => {
                   <option value="other">Other</option>
                 </select>
               </div>
-              
+
               <div className="md:col-span-2">
                 <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
                 <select
@@ -266,7 +282,7 @@ const ApplicationForm = () => {
                 />
                 {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address}</p>}
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">City *</label>
@@ -279,7 +295,7 @@ const ApplicationForm = () => {
                   />
                   {errors.city && <p className="text-red-500 text-sm mt-1">{errors.city}</p>}
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">State *</label>
                   <select
@@ -295,7 +311,7 @@ const ApplicationForm = () => {
                   </select>
                   {errors.state && <p className="text-red-500 text-sm mt-1">{errors.state}</p>}
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Pincode *</label>
                   <input
@@ -336,7 +352,7 @@ const ApplicationForm = () => {
                 </select>
                 {errors.highestQualification && <p className="text-red-500 text-sm mt-1">{errors.highestQualification}</p>}
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">University/College *</label>
                 <input
@@ -348,7 +364,7 @@ const ApplicationForm = () => {
                 />
                 {errors.university && <p className="text-red-500 text-sm mt-1">{errors.university}</p>}
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Graduation Year *</label>
                 <input
@@ -362,7 +378,7 @@ const ApplicationForm = () => {
                 />
                 {errors.graduationYear && <p className="text-red-500 text-sm mt-1">{errors.graduationYear}</p>}
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Percentage/CGPA</label>
                 <input
@@ -400,7 +416,7 @@ const ApplicationForm = () => {
                   </select>
                   {errors.experience && <p className="text-red-500 text-sm mt-1">{errors.experience}</p>}
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Current Position</label>
                   <input
@@ -412,7 +428,7 @@ const ApplicationForm = () => {
                   />
                 </div>
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Current Company</label>
                 <input
@@ -423,7 +439,7 @@ const ApplicationForm = () => {
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Position Applied For *</label>
@@ -440,7 +456,7 @@ const ApplicationForm = () => {
                   </select>
                   {errors.position && <p className="text-red-500 text-sm mt-1">{errors.position}</p>}
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Preferred Department *</label>
                   <select
@@ -457,7 +473,7 @@ const ApplicationForm = () => {
                   {errors.department && <p className="text-red-500 text-sm mt-1">{errors.department}</p>}
                 </div>
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Technical Skills</label>
                 <textarea
@@ -501,7 +517,7 @@ const ApplicationForm = () => {
                 </div>
                 {errors.resume && <p className="text-red-500 text-sm mt-1">{errors.resume}</p>}
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Passport Size Photo * (JPG/PNG only)</label>
                 <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
@@ -525,7 +541,7 @@ const ApplicationForm = () => {
                 </div>
                 {errors.photo && <p className="text-red-500 text-sm mt-1">{errors.photo}</p>}
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Achievements & Certifications</label>
                 <textarea
@@ -553,26 +569,26 @@ const ApplicationForm = () => {
                   <p className="text-gray-600">{formData.email}</p>
                   <p className="text-gray-600">{formData.phone}</p>
                 </div>
-                
+
                 <div>
                   <h4 className="font-semibold text-gray-900">Position Applied</h4>
                   <p className="text-gray-600">{formData.position}</p>
                   <p className="text-gray-600">{formData.department}</p>
                 </div>
-                
+
                 <div>
                   <h4 className="font-semibold text-gray-900">Education</h4>
                   <p className="text-gray-600">{formData.highestQualification}</p>
                   <p className="text-gray-600">{formData.university}</p>
                 </div>
-                
+
                 <div>
                   <h4 className="font-semibold text-gray-900">Experience</h4>
                   <p className="text-gray-600">{formData.experience}</p>
                   <p className="text-gray-600">{formData.currentPosition}</p>
                 </div>
               </div>
-              
+
               <div className="border-t pt-4">
                 <h4 className="font-semibold text-gray-900 mb-2">Documents</h4>
                 <div className="space-y-1">
@@ -607,26 +623,23 @@ const ApplicationForm = () => {
           <div className="flex items-center justify-between">
             {steps.map((step, index) => (
               <div key={step.number} className="flex flex-col items-center">
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center mb-2 ${
-                  currentStep >= step.number 
-                    ? 'bg-blue-600 text-white' 
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center mb-2 ${currentStep >= step.number
+                    ? 'bg-blue-600 text-white'
                     : 'bg-gray-200 text-gray-400'
-                }`}>
+                  }`}>
                   {currentStep > step.number ? (
                     <Check size={20} />
                   ) : (
                     <step.icon size={20} />
                   )}
                 </div>
-                <span className={`text-sm font-medium ${
-                  currentStep >= step.number ? 'text-blue-600' : 'text-gray-400'
-                }`}>
+                <span className={`text-sm font-medium ${currentStep >= step.number ? 'text-blue-600' : 'text-gray-400'
+                  }`}>
                   {step.title}
                 </span>
                 {index < steps.length - 1 && (
-                  <div className={`hidden md:block w-20 h-1 mt-5 -mr-20 ${
-                    currentStep > step.number ? 'bg-blue-600' : 'bg-gray-200'
-                  }`} />
+                  <div className={`hidden md:block w-20 h-1 mt-5 -mr-20 ${currentStep > step.number ? 'bg-blue-600' : 'bg-gray-200'
+                    }`} />
                 )}
               </div>
             ))}
@@ -642,11 +655,10 @@ const ApplicationForm = () => {
             <button
               onClick={prevStep}
               disabled={currentStep === 1}
-              className={`px-6 py-2 rounded-lg font-medium ${
-                currentStep === 1
+              className={`px-6 py-2 rounded-lg font-medium ${currentStep === 1
                   ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
                   : 'bg-gray-600 text-white hover:bg-gray-700 transition-colors'
-              }`}
+                }`}
             >
               Previous
             </button>

@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { User, Mail, Phone, MapPin, FileText, Camera, Edit, Calendar, CheckCircle, Clock, AlertCircle } from 'lucide-react';
+import { useState } from 'react';
+import { User, Mail, Phone, MapPin, FileText, Camera, Edit, Calendar, CheckCircle, Clock } from 'lucide-react';
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState('profile');
 
   // Mock user data
   const user = {
-    firstName: 'Rajesh',
+    firstName: 'Kartik',
     lastName: 'Kumar',
-    email: 'rajesh.kumar@email.com',
+    email: 'kartikkumar93688@email.com',
     phone: '+91 9876543210',
     dateOfBirth: '1990-05-15',
     address: 'Sector 15, Noida, Uttar Pradesh - 201301',
@@ -86,7 +86,7 @@ const Dashboard = () => {
             <span>Edit Profile</span>
           </button>
         </div>
-        
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Profile Photo */}
           <div className="text-center">
@@ -105,7 +105,7 @@ const Dashboard = () => {
             </h3>
             <p className="text-gray-600">{user.currentPosition}</p>
           </div>
-          
+
           {/* Personal Details */}
           <div className="lg:col-span-2 space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -116,7 +116,7 @@ const Dashboard = () => {
                   <p className="font-medium">{user.email}</p>
                 </div>
               </div>
-              
+
               <div className="flex items-center space-x-3">
                 <Phone className="text-gray-400" size={20} />
                 <div>
@@ -124,7 +124,7 @@ const Dashboard = () => {
                   <p className="font-medium">{user.phone}</p>
                 </div>
               </div>
-              
+
               <div className="flex items-center space-x-3">
                 <Calendar className="text-gray-400" size={20} />
                 <div>
@@ -132,7 +132,7 @@ const Dashboard = () => {
                   <p className="font-medium">{user.dateOfBirth}</p>
                 </div>
               </div>
-              
+
               <div className="flex items-center space-x-3">
                 <User className="text-gray-400" size={20} />
                 <div>
@@ -141,7 +141,7 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="flex items-start space-x-3">
               <MapPin className="text-gray-400 mt-1" size={20} />
               <div>
@@ -149,7 +149,7 @@ const Dashboard = () => {
                 <p className="font-medium">{user.address}</p>
               </div>
             </div>
-            
+
             <div className="flex items-center space-x-3">
               <FileText className="text-gray-400" size={20} />
               <div>
@@ -167,7 +167,7 @@ const Dashboard = () => {
     <div className="space-y-6">
       <div className="bg-white rounded-lg shadow-md p-6">
         <h2 className="text-2xl font-bold text-gray-900 mb-6">My Applications</h2>
-        
+
         <div className="space-y-4">
           {applications.map((application) => (
             <div key={application.id} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
@@ -182,7 +182,7 @@ const Dashboard = () => {
                     </p>
                   )}
                 </div>
-                
+
                 <div className="flex items-center space-x-3">
                   <div className={`${application.bgColor} ${application.statusColor} px-3 py-1 rounded-full flex items-center space-x-2`}>
                     <application.icon size={16} />
@@ -204,7 +204,7 @@ const Dashboard = () => {
     <div className="space-y-6">
       <div className="bg-white rounded-lg shadow-md p-6">
         <h2 className="text-2xl font-bold text-gray-900 mb-6">Notifications</h2>
-        
+
         <div className="space-y-4">
           {notifications.map((notification) => (
             <div key={notification.id} className="border-l-4 border-blue-500 bg-blue-50 p-4 rounded">
@@ -214,11 +214,10 @@ const Dashboard = () => {
                   <p className="text-gray-600 mt-1">{notification.message}</p>
                   <p className="text-sm text-gray-500 mt-2">{notification.date}</p>
                 </div>
-                <div className={`px-2 py-1 rounded text-xs font-medium ${
-                  notification.type === 'success' ? 'bg-green-100 text-green-800' :
+                <div className={`px-2 py-1 rounded text-xs font-medium ${notification.type === 'success' ? 'bg-green-100 text-green-800' :
                   notification.type === 'warning' ? 'bg-yellow-100 text-yellow-800' :
-                  'bg-blue-100 text-blue-800'
-                }`}>
+                    'bg-blue-100 text-blue-800'
+                  }`}>
                   {notification.type}
                 </div>
               </div>
@@ -264,31 +263,28 @@ const Dashboard = () => {
             <nav className="flex space-x-8 px-6">
               <button
                 onClick={() => setActiveTab('profile')}
-                className={`py-4 px-1 border-b-2 font-medium text-sm ${
-                  activeTab === 'profile'
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                }`}
+                className={`py-4 px-1 border-b-2 font-medium text-sm ${activeTab === 'profile'
+                  ? 'border-blue-500 text-blue-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                  }`}
               >
                 Profile
               </button>
               <button
                 onClick={() => setActiveTab('applications')}
-                className={`py-4 px-1 border-b-2 font-medium text-sm ${
-                  activeTab === 'applications'
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                }`}
+                className={`py-4 px-1 border-b-2 font-medium text-sm ${activeTab === 'applications'
+                  ? 'border-blue-500 text-blue-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                  }`}
               >
                 Applications
               </button>
               <button
                 onClick={() => setActiveTab('notifications')}
-                className={`py-4 px-1 border-b-2 font-medium text-sm ${
-                  activeTab === 'notifications'
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                }`}
+                className={`py-4 px-1 border-b-2 font-medium text-sm ${activeTab === 'notifications'
+                  ? 'border-blue-500 text-blue-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                  }`}
               >
                 Notifications
               </button>

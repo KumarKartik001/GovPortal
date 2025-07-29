@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Search, Filter, MapPin, Clock, Briefcase, ArrowRight, Calendar } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const JobListings = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedDepartment, setSelectedDepartment] = useState('');
   const [selectedLocation, setSelectedLocation] = useState('');
   const [selectedExperience, setSelectedExperience] = useState('');
+  const navigate = useNavigate();
 
   const jobs = [
     {
@@ -245,7 +247,10 @@ const JobListings = () => {
                     <div className="text-2xl font-bold text-green-600 mb-4 sm:mb-0">
                       {job.salary}
                     </div>
-                    <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2 w-fit">
+                    <button
+                      className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2 w-fit"
+                      onClick={() => navigate('/application-form')}
+                    >
                       <span>Apply Now</span>
                       <ArrowRight size={16} />
                     </button>
